@@ -128,7 +128,7 @@ describe('zip store stream', () => {
       .slice(3, 6)
       .map(
         l =>
-          /^\s*(?<Length>\d+)\s+(?<Method>\w+)\s+(?<Size>\d+)\s+(?<Cmpr>\d+)%\s+(?<Date>\d\d-\d\d-\d\d\d\d)\s+(?<Time>\d\d:\d\d)\s+(?<CRC32>\S+)\s+(?<name>\S+)$/.exec(
+          /^\s*(?<Length>\d+)\s+(?<Method>\w+)\s+(?<Size>\d+)\s+(?<Cmpr>\d+)%\s+(?<Date>[\d-]{10,10})\s+(?<Time>\d\d:\d\d)\s+(?<CRC32>\S+)\s+(?<name>\S+)$/.exec(
             l,
           )?.groups,
       );
