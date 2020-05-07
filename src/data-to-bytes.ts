@@ -16,6 +16,7 @@ export async function dataToBuffer(
     };
   if (typeof data === 'string')
     return dataToBuffer(
+      // we will use ASCII encoding if string is ascii only, saving some bytes
       Buffer.from(data, /^[\p{ASCII}]+$/u.test(data) ? 'ascii' : 'utf-8'),
     );
 
