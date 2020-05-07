@@ -21,12 +21,12 @@ jobs:
           - os: windows-latest
             node: 10.x
           - os: windows-latest
-            node: 13.x
+            node: 14.x
           # On macOS, run tests with only the latest environments.
           - os: macOS-latest
             node: 10.x
           - os: macOS-latest
-            node: 13.x
+            node: 14.x
 
     runs-on: ${{ matrix.os }}
     steps:
