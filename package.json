@@ -24,9 +24,9 @@
   },
   "devDependencies": {
     "@types/jest": "latest",
+    "@types/node": "13.13.5",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
-    "crc32-stream": "3.0.1",
     "eslint": "7.0.0-rc.0",
     "eslint-config-prettier": "latest",
     "eslint-plugin-jest": "latest",
