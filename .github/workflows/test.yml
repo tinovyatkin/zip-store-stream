@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
         node: [14.x, 12.x, 10.x]
         exclude:
           # On Windows, run tests with only the latest environments.
@@ -37,6 +37,10 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: yarn install --frozen-lockfile --ignore-optional --non-interactive --silent
+
+      - run: scoop install unzip
+        if: matrix.os == 'windows-latest'
+
       - run: node --expose-gc node_modules/jest/bin/jest --forceExit --bail --colors --logHeapUsage --maxWorkers=2 --ci
 
       - uses: codecov/codecov-action@v1

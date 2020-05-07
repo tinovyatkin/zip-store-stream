@@ -8,7 +8,6 @@ module.exports = {
   collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
   moduleFileExtensions: ['ts', 'js'],
   coverageProvider: 'v8',
-  testMatch: ['<rootDir>/src/**/?(*.)+(test).ts'],
   testRunner: 'jest-circus/runner',
   watchPathIgnorePatterns: [
     '<rootDir>/node_modules/',

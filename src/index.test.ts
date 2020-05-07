@@ -8,6 +8,8 @@ import { execFileSync } from 'child_process';
 import * as Stream from 'stream';
 import { promisify } from 'util';
 import { randomBytes } from 'crypto';
+import * as path from 'path';
+import { EOL } from 'os';
 
 import { ZipStoreStream } from './index';
 
@@ -75,14 +77,15 @@ describe('zip store stream', () => {
 
   it('should work with streams', async () => {
     const FILENAME = 'test-stream.zip';
+    const THIS_FILE = path.basename(__filename);
     const zip = new ZipStoreStream([
       {
-        path: __filename,
+        path: THIS_FILE,
         data: createReadStream(__filename),
       },
     ]);
     await pipeline(zip, createWriteStream(FILENAME));
-    const content = execFileSync('unzip', ['-p', FILENAME, __filename], {
+    const content = execFileSync('unzip', ['-p', FILENAME, THIS_FILE], {
       encoding: 'utf-8',
     });
     expect(content).toBe(readFileSync(__filename, { encoding: 'utf-8' }));
@@ -124,11 +127,11 @@ describe('zip store stream', () => {
     */
     const parsed = verbosely
       .trim()
-      .split('\n')
+      .split(EOL)
       .slice(3, 6)
       .map(
         l =>
-          /^\s*(?<Length>\d+)\s+(?<Method>\w+)\s+(?<Size>\d+)\s+(?<Cmpr>\d+)%\s+(?<Date>[\d-]{10,10})\s+(?<Time>\d\d:\d\d)\s+(?<CRC32>\S+)\s+(?<name>\S+)$/.exec(
+          /^\s*(?<Length>\d+)\s+(?<Method>\w+)\s+(?<Size>\d+)\s+(?<Cmpr>\d+)%\s+(?<Date>[\d.-]{10,10})\s+(?<Time>\d\d:\d\d)\s+(?<CRC32>\S+)\s+(?<name>\S+)$/.exec(
             l,
           )?.groups,
       );
