@@ -112,6 +112,7 @@ describe('zip store stream', () => {
     const verbosely = execFileSync('unzip', ['-v', FILENAME], {
       encoding: 'utf8',
     });
+    console.log(verbosely);
     /*
             Length   Method    Size  Cmpr    Date    Time   CRC-32   Name
         --------  ------  ------- ---- ---------- ----- --------  ----
