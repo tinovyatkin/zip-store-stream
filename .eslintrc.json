@@ -47,7 +47,8 @@
         "@typescript-eslint/ban-ts-ignore": "off",
         "import/order": "off", // may interfere with mocking,
         "max-nested-callbacks": "off",
-        "max-lines": "off"
+        "max-lines": "off",
+        "jest/no-test-callback": "off"
       }
     }
   ]
