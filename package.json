@@ -1,34 +1,38 @@
 {
-  "name": "____FIX_ME____",
-  "description": "____FIX_ME____",
+  "name": "zip-store-stream",
+  "description": "Creates a readable stream of ZIP file with no compression out of given files, streams or buffers",
   "license": "MIT",
   "author": "Konstantin Vyatkin <tino@vtkn.io>",
-  "homepage": "https://github.com/tinovyatkin/____FIX_ME____#readme",
+  "homepage": "https://github.com/walletpass/zip-store-stream#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tinovyatkin/____FIX_ME____.git"
+    "url": "git+https://github.com/walletpass/zip-store-stream.git"
   },
   "bugs": {
-    "url": "https://github.com/tinovyatkin/____FIX_ME____/issues"
+    "url": "https://github.com/walletpass/zip-store-stream/issues"
   },
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "scripts": {
-    "lint": "eslint --ext=ts ./src",
-    "test": "jest",
     "build": "tsc",
-    "prepublishOnly": "jest && tsc"
+    "lint": "eslint --ext=ts ./src",
+    "prepublishOnly": "jest && tsc",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@node-rs/crc32": "0.1.7"
   },
   "devDependencies": {
     "@types/jest": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
+    "crc32-stream": "3.0.1",
     "eslint": "7.0.0-rc.0",
     "eslint-config-prettier": "latest",
     "eslint-plugin-jest": "latest",
     "husky": "latest",
-    "jest": "25.5.4",
-    "jest-circus": "25.5.4",
+    "jest": "26.0.1",
+    "jest-circus": "26.0.1",
     "lint-staged": "latest",
     "npm-package-json-lint": "latest",
     "prettier": "latest",
@@ -37,7 +41,10 @@
     "typescript": "latest"
   },
   "keywords": [
-    "____FIX_ME____"
+    "compress",
+    "stream",
+    "typescript",
+    "zip"
   ],
   "engines": {
     "yarn": ">=1.19"
