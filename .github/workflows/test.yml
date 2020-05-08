@@ -21,12 +21,12 @@ jobs:
           - os: windows-latest
             node: 10.x
           - os: windows-latest
-            node: 13.x
+            node: 14.x
           # On macOS, run tests with only the latest environments.
           - os: macOS-latest
             node: 10.x
           - os: macOS-latest
-            node: 13.x
+            node: 14.x
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -37,7 +37,11 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: yarn install --frozen-lockfile --ignore-optional --non-interactive --silent
-      - run: node --expose-gc node_modules/jest/bin/jest --forceExit --bail --colors --logHeapUsage --maxWorkers=2 --ci
+
+      - run: choco install unzip -y --no-progress
+        if: matrix.os == 'windows-latest'
+
+      - run: yarn test --colors --ci
 
       - uses: codecov/codecov-action@v1
         with:

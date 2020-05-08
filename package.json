@@ -11,22 +11,26 @@
   "bugs": {
     "url": "https://github.com/walletpass/zip-store-stream/issues"
   },
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "dist/index.js",
+  "files": [
+    "dist/*.d.ts",
+    "dist/*.js"
+  ],
   "scripts": {
     "build": "tsc",
     "lint": "eslint --ext=ts ./src",
     "prepublishOnly": "jest && tsc",
-    "test": "jest"
+    "test": " node --expose-gc node_modules/jest-cli/bin/jest --detectLeaks --detectOpenHandles --logHeapUsage"
   },
   "dependencies": {
     "@node-rs/crc32": "0.1.7"
   },
   "devDependencies": {
     "@types/jest": "latest",
+    "@types/node": "13.13.5",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
-    "crc32-stream": "3.0.1",
     "eslint": "7.0.0-rc.0",
     "eslint-config-prettier": "latest",
     "eslint-plugin-jest": "latest",
@@ -38,7 +42,8 @@
     "prettier": "latest",
     "prettier-package-json": "latest",
     "ts-jest": "latest",
-    "typescript": "latest"
+    "typescript": "latest",
+    "weak-napi": "2.0.1"
   },
   "keywords": [
     "compress",
@@ -47,6 +52,7 @@
     "zip"
   ],
   "engines": {
+    "node": ">=10.10",
     "yarn": ">=1.19"
   }
 }
