@@ -58,10 +58,11 @@ export class ZipStoreStream extends Readable {
     if (!this.#files.length) {
       if (!this.#finished) {
         this.#finished = true;
-        // writing central directory and finishing
+        // writing central directory
         this.push(Buffer.from(this.#centralDirectory));
-        this.push(ZIP_EPILOGUE);
 
+        // ending ZIP file
+        this.push(ZIP_EPILOGUE);
         const zipFinal = Buffer.alloc(14, 0);
         let offset = zipFinal.writeUInt16LE(this.#numberOfFiles, 0);
         offset = zipFinal.writeUInt16LE(this.#numberOfFiles, offset);
