@@ -55,8 +55,58 @@ export class ZipStoreStream extends Readable {
   }
 
   async _read(): Promise<void> {
-    // end if there is no files
-    if (!this.files.length) {
+    if (this.files.length) {
+      // getting next file to pipe
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const { path, data } = this.files.shift()!;
+
+      const { bytes, crc32 } = await dataToBuffer.call(this, data);
+      // We support only ASCII encoded file names here
+      const pathBytes = Buffer.from(path, 'ascii');
+
+      // Generate a file header (as a buffer)
+      const fileHeader = Buffer.alloc(16, 0);
+      // crc32
+      let offset = fileHeader.writeUInt32LE(crc32);
+      // compressed size
+      offset = fileHeader.writeUInt32LE(bytes.length, offset);
+      // uncompressed size
+      offset = fileHeader.writeUInt32LE(bytes.length, offset);
+      // file name length
+      fileHeader.writeUInt16LE(pathBytes.length, offset);
+
+      const directoryEntryMeta = Buffer.alloc(14, 0);
+      /*
+      comment length, disk start, file attributes
+        [0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+      external file attributes
+        [0x00, 0x00, 0x00, 0x00]
+    */
+      // relative offset of local header
+      directoryEntryMeta.writeUInt32LE(this.filesDataWritten, 10);
+      this.centralDirectory.push(
+        ...DIRECTORY_ENTRY_PROLOGUE,
+        ...FILE_HEADER_PROLOGUE,
+        ...fileHeader,
+        ...directoryEntryMeta,
+        ...pathBytes,
+      );
+
+      this.push(FILE_DATA_PROLOGUE);
+      this.push(FILE_HEADER_PROLOGUE);
+      this.push(fileHeader);
+      this.push(pathBytes);
+      // update offset
+      this.filesDataWritten +=
+        FILE_DATA_PROLOGUE.length +
+        FILE_HEADER_PROLOGUE.length +
+        fileHeader.length +
+        pathBytes.length +
+        bytes.length;
+      this.push(bytes);
+    }
+    // end if there is no more files
+    else {
       if (!this.finished) {
         this.finished = true;
         // writing central directory
@@ -74,55 +124,6 @@ export class ZipStoreStream extends Readable {
         // push the EOF-signaling `null` chunk.
         this.push(null);
       }
-      return;
     }
-
-    // getting next file to pipe
-    const { path, data } = this.files.shift() as ZipSource;
-
-    const { bytes, crc32 } = await dataToBuffer(data);
-    // We support only ASCII encoded file names here
-    const pathBytes = Buffer.from(path, 'ascii');
-
-    // Generate a file header (as a buffer)
-    const fileHeader = Buffer.alloc(16, 0);
-    // crc32
-    let offset = fileHeader.writeUInt32LE(crc32);
-    // compressed size
-    offset = fileHeader.writeUInt32LE(bytes.length, offset);
-    // uncompressed size
-    offset = fileHeader.writeUInt32LE(bytes.length, offset);
-    // file name length
-    fileHeader.writeUInt16LE(pathBytes.length, offset);
-
-    const directoryEntryMeta = Buffer.alloc(14, 0);
-    /*
-      comment length, disk start, file attributes
-        [0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
-      external file attributes
-        [0x00, 0x00, 0x00, 0x00]
-    */
-    // relative offset of local header
-    directoryEntryMeta.writeUInt32LE(this.filesDataWritten, 10);
-    this.centralDirectory.push(
-      ...DIRECTORY_ENTRY_PROLOGUE,
-      ...FILE_HEADER_PROLOGUE,
-      ...fileHeader,
-      ...directoryEntryMeta,
-      ...pathBytes,
-    );
-
-    this.push(FILE_DATA_PROLOGUE);
-    this.push(FILE_HEADER_PROLOGUE);
-    this.push(fileHeader);
-    this.push(pathBytes);
-    // update offset
-    this.filesDataWritten +=
-      FILE_DATA_PROLOGUE.length +
-      FILE_HEADER_PROLOGUE.length +
-      fileHeader.length +
-      pathBytes.length +
-      bytes.length;
-    if (this.push(bytes)) return this.read();
   }
 }
