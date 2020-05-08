@@ -18,6 +18,16 @@ const FILE_HEADER_PROLOGUE = Buffer.from([
   0x00,
 ]);
 const FILE_DATA_PROLOGUE = Buffer.from([0x50, 0x4b, 0x03, 0x04]);
+const ZIP_EPILOGUE = Buffer.from([
+  0x50,
+  0x4b,
+  0x05,
+  0x06,
+  0x00,
+  0x00,
+  0x00,
+  0x00,
+]);
 
 function int(n: number, length: number): number[] {
   return Array.from({ length }, (k: number = n) => {
@@ -50,24 +60,15 @@ export class ZipStoreStream extends Readable {
         this.#finished = true;
         // writing central directory and finishing
         this.push(Buffer.from(this.#centralDirectory));
-        this.push(
-          Buffer.from([
-            0x50,
-            0x4b,
-            0x05,
-            0x06,
-            0x00,
-            0x00,
-            0x00,
-            0x00,
-            ...int(this.#numberOfFiles, 2),
-            ...int(this.#numberOfFiles, 2),
-            ...int(this.#centralDirectory.length, 4),
-            ...int(this.#filesDataWritten, 4),
-            0x00,
-            0x00,
-          ]),
-        );
+        this.push(ZIP_EPILOGUE);
+
+        const zipFinal = Buffer.alloc(14, 0);
+        let offset = zipFinal.writeUInt16LE(this.#numberOfFiles, 0);
+        offset = zipFinal.writeUInt16LE(this.#numberOfFiles, offset);
+        offset = zipFinal.writeUInt32LE(this.#centralDirectory.length, offset);
+        zipFinal.writeUInt32LE(this.#filesDataWritten, offset);
+        this.push(zipFinal);
+
         // push the EOF-signaling `null` chunk.
         this.push(null);
       }
