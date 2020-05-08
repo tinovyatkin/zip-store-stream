@@ -1,7 +1,7 @@
 import { dataToBuffer } from './data-to-bytes';
 import { Readable } from 'stream';
 
-const FILE_HEADER_EPILOGUE = Buffer.from([
+const FILE_HEADER_PROLOGUE = Buffer.from([
   // version + bit flag
   0x0a,
   0x00,
@@ -17,7 +17,7 @@ const FILE_HEADER_EPILOGUE = Buffer.from([
   0x00,
   0x00,
 ]);
-const FILE_DATA_EPILOGUE = Buffer.from([0x50, 0x4b, 0x03, 0x04]);
+const FILE_DATA_PROLOGUE = Buffer.from([0x50, 0x4b, 0x03, 0x04]);
 
 function int(n: number, length: number): number[] {
   return Array.from({ length }, (k: number = n) => {
@@ -49,9 +49,9 @@ export class ZipStoreStream extends Readable {
       if (!this.#finished) {
         this.#finished = true;
         // writing central directory and finishing
+        this.push(Buffer.from(this.#centralDirectory));
         this.push(
           Buffer.from([
-            ...this.#centralDirectory,
             0x50,
             0x4b,
             0x05,
@@ -92,7 +92,7 @@ export class ZipStoreStream extends Readable {
     // file name length
     fileHeader.writeUInt16LE(pathBytes.length, 12);
 
-    const commonHeader = Buffer.concat([FILE_HEADER_EPILOGUE, fileHeader]);
+    const commonHeader = Buffer.concat([FILE_HEADER_PROLOGUE, fileHeader]);
 
     this.#centralDirectory.push(
       0x50,
@@ -116,11 +116,11 @@ export class ZipStoreStream extends Readable {
       ...pathBytes,
     );
 
-    this.push(FILE_DATA_EPILOGUE);
+    this.push(FILE_DATA_PROLOGUE);
     this.push(commonHeader);
     this.push(pathBytes);
     this.#filesDataWritten +=
-      FILE_DATA_EPILOGUE.length +
+      FILE_DATA_PROLOGUE.length +
       commonHeader.length +
       pathBytes.length +
       bytes.length;
