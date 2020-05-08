@@ -1,6 +1,23 @@
 import { dataToBuffer } from './data-to-bytes';
 import { Readable } from 'stream';
 
+const FILE_HEADER_EPILOGUE = Buffer.from([
+  // version + bit flag
+  0x0a,
+  0x00,
+  0x00,
+  0x00,
+  // compression method - this is STORE, means no compression
+  0x00,
+  0x00,
+  // file time - we will put nothing here
+  0x00,
+  0x00,
+  // file date - we will put nothing here
+  0x00,
+  0x00,
+]);
+
 function int(n: number, length: number): number[] {
   return Array.from({ length }, (k: number = n) => {
     n >>>= 8;
@@ -63,24 +80,18 @@ export class ZipStoreStream extends Readable {
     // We support only ASCII encoded file names here
     const pathBytes = Buffer.from(path, 'ascii');
 
-    const commonHeader = [
-      0x0a,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      ...int(crc32, 4),
-      ...int(bytes.length, 4),
-      ...int(bytes.length, 4),
-      ...int(pathBytes.length, 2),
-      0x00,
-      0x00,
-    ];
+    // Generate a file header (as a buffer)
+    const fileHeader = Buffer.alloc(16, 0);
+    // crc32
+    fileHeader.writeUInt32LE(crc32, 0);
+    // compressed size
+    fileHeader.writeUInt32LE(bytes.length, 4);
+    // uncompressed size
+    fileHeader.writeUInt32LE(bytes.length, 8);
+    // file name length
+    fileHeader.writeUInt16LE(pathBytes.length, 12);
+
+    const commonHeader = Buffer.concat([FILE_HEADER_EPILOGUE, fileHeader]);
 
     this.#centralDirectory.push(
       0x50,
