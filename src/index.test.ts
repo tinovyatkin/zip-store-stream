@@ -141,6 +141,7 @@ describe('zip store stream', () => {
         expect.objectContaining({ Cmpr: '0', Method: 'Stored' }),
       ]),
     );
+    expect(parsed[1]?.Size).toBe('10000');
     unlinkSync(FILENAME);
   });
 });
