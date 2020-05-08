@@ -4,7 +4,7 @@ module.exports = {
   testEnvironment: 'node',
   verbose: true,
   collectCoverage: true,
-  coverageReporters: ['text', 'json'],
+  coverageReporters: ['text', 'json', 'lcov'],
   collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
   moduleFileExtensions: ['ts', 'js'],
   testMatch: ['**/?(*.)+(test).ts'],
