@@ -18,6 +18,14 @@ const FILE_HEADER_PROLOGUE = Buffer.from([
   0x00,
 ]);
 const FILE_DATA_PROLOGUE = Buffer.from([0x50, 0x4b, 0x03, 0x04]);
+const DIRECTORY_ENTRY_PROLOGUE = Buffer.from([
+  0x50,
+  0x4b,
+  0x01,
+  0x02,
+  0x14,
+  0x00,
+]);
 const ZIP_EPILOGUE = Buffer.from([
   0x50,
   0x4b,
@@ -28,13 +36,6 @@ const ZIP_EPILOGUE = Buffer.from([
   0x00,
   0x00,
 ]);
-
-function int(n: number, length: number): number[] {
-  return Array.from({ length }, (k: number = n) => {
-    n >>>= 8;
-    return k & 0xff;
-  });
-}
 
 interface ZipSource {
   path: string;
@@ -94,26 +95,20 @@ export class ZipStoreStream extends Readable {
     // file name length
     fileHeader.writeUInt16LE(pathBytes.length, 12);
 
+    const directoryEntryMeta = Buffer.alloc(14, 0);
+    /*
+      comment length, disk start, file attributes
+        [0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+      external file attributes
+        [0x00, 0x00, 0x00, 0x00]
+    */
+    // relative offset of local header
+    directoryEntryMeta.writeUInt32LE(this.#filesDataWritten, 10);
     this.#centralDirectory.push(
-      0x50,
-      0x4b,
-      0x01,
-      0x02,
-      0x14,
-      0x00,
+      ...DIRECTORY_ENTRY_PROLOGUE,
       ...FILE_HEADER_PROLOGUE,
       ...fileHeader,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      0x00,
-      ...int(this.#filesDataWritten, 4),
+      ...directoryEntryMeta,
       ...pathBytes,
     );
 
