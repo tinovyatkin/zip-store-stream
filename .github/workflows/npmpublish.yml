@@ -22,16 +22,27 @@ jobs:
             ${{ runner.OS }}-build-${{ env.cache-name }}-
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
-      - run: rm .yarnclean
       - run: yarn install --frozen-lockfile --ignore-optional --non-interactive --silent
       - run: node --expose-gc node_modules/jest/bin/jest --forceExit --logHeapUsage --runInBand --ci
-      - name: Upload coverage to Codecov
-        # https://github.com/codecov/codecov-bash/blob/1044b7a243e0ea0c05ed43c2acd8b7bb7cef340c/codecov#L158
-        run: bash <(curl -s https://codecov.io/bash)
-          -f ./coverage/coverage-final.json
-          -Z || echo 'Codecov upload failed'
+      - uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage/coverage-final.json
+
+      - name: Save ESLint results as JSON for sonar
+        run: yarn lint --format json -o reports/eslint-results.json
+
+      - name: SonarCloud Scan
+        run: |
+          curl --create-dirs -sSLo .sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
+          unzip -o .sonar/sonar-scanner.zip -d .sonar/
+          .sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux/bin/sonar-scanner \
+            -Dsonar.login=${{ secrets.SONAR_LOGIN }}
         env:
-          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_SCANNER_VERSION: '4.2.0.1873'
+          # https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner
+          SONAR_SCANNER_OPTS: -Xmx1024m
 
   lint-package:
     needs: test

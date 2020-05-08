@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/walletpass/zip-store-stream/issues"
   },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/index.js",
   "files": [
     "dist/*.d.ts",
@@ -37,6 +37,7 @@
     "husky": "latest",
     "jest": "26.0.1",
     "jest-circus": "26.0.1",
+    "jest-sonar": "0.2.7",
     "lint-staged": "latest",
     "npm-package-json-lint": "latest",
     "prettier": "latest",
