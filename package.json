@@ -1,6 +1,6 @@
 {
   "name": "zip-store-stream",
-  "description": "Creates a readable stream of ZIP file with no compression out of given files, streams or buffers",
+  "description": "Creates a in-memory ZIP file with no compression, out of given files, streams or buffers",
   "license": "MIT",
   "author": "Konstantin Vyatkin <tino@vtkn.io>",
   "homepage": "https://github.com/walletpass/zip-store-stream#readme",
