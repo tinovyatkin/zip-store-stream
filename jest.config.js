@@ -17,4 +17,14 @@ module.exports = {
     '<rootDir>/coverage/',
     '<rootDir>/.vscode/',
   ],
+  reporters: [
+    'default',
+    [
+      'jest-sonar',
+      {
+        outputDirectory: './reports',
+        outputName: 'jest-reporter.xml',
+      },
+    ],
+  ],
 };

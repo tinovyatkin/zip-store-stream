@@ -1477,6 +1477,11 @@ enquirer@^2.3.4:
   dependencies:
     ansi-colors "^3.2.1"
 
+entities@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.0.tgz#68d6084cab1b079767540d80e56a39b423e4abf4"
+  integrity sha512-D9f7V0JSRwIxlRI2mjMqufDrRDnx8p+eEOz7aUM9SuvF8gsBzra0/6tbjl1m8eQHrZlYj6PxqE00hZ1SAIKPLw==
+
 error-ex@^1.3.1:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/error-ex/-/error-ex-1.3.2.tgz#b4ac40648107fdcdcfae242f428bea8a14d4f1bf"
@@ -2789,6 +2794,14 @@ jest-snapshot@^26.0.1:
     natural-compare "^1.4.0"
     pretty-format "^26.0.1"
     semver "^7.3.2"
+
+jest-sonar@0.2.7:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/jest-sonar/-/jest-sonar-0.2.7.tgz#376df243921b7dd17b73e90a60bc13284554a46a"
+  integrity sha512-0YHIf11A4haz4jGTnJfRcmzlEbPbR6IrpZsnxqejrJcP4C2/LBn0FoQrFt+cigBioMOZtR1oROgvHeqI/XmIKA==
+  dependencies:
+    entities "2.0.0"
+    strip-ansi "5.2.0"
 
 jest-util@^26.0.1:
   version "26.0.1"
@@ -4249,7 +4262,7 @@ stringify-object@^3.3.0:
     is-obj "^1.0.1"
     is-regexp "^1.0.0"
 
-strip-ansi@^5.1.0:
+strip-ansi@5.2.0, strip-ansi@^5.1.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-5.2.0.tgz#8c9a536feb6afc962bdfa5b104a5091c1ad9c0ae"
   integrity sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA==
