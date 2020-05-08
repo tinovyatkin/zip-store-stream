@@ -1,4 +1,4 @@
-# zip-store-stream [![codecov](https://codecov.io/gh/walletpass/zip-store-stream/branch/master/graph/badge.svg)](https://codecov.io/gh/walletpass/zip-store-stream)
+# zip-store-stream [![codecov](https://codecov.io/gh/walletpass/zip-store-stream/branch/master/graph/badge.svg)](https://codecov.io/gh/walletpass/zip-store-stream) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=zip-store-stream&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=zip-store-stream)
 
 Highly optimized Node.JS library to create read stream of ZIP archive without compression from given strings, Buffers or streams.
 Storing without compression is fast and in many cases is enough, if you just want to bundle some files together (as our use case for Apple Wallet `.pkpass` files, which consists mostly of already compressed PNG files)
