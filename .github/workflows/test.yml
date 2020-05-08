@@ -56,10 +56,6 @@ jobs:
           curl --create-dirs -sSLo .sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
           unzip -o .sonar/sonar-scanner.zip -d .sonar/
           .sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux/bin/sonar-scanner \
-            -Dsonar.organization=walletpass \
-            -Dsonar.projectKey=zip-store-stream \
-            -Dsonar.sources=src \
-            -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_LOGIN }}
 
         if: matrix.os == 'ubuntu-latest' && matrix.node == '12.x'
