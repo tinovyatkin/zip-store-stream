@@ -43,32 +43,32 @@ interface ZipSource {
 }
 
 export class ZipStoreStream extends Readable {
-  #files: ZipSource[];
-  #finished = false;
-  readonly #numberOfFiles: number;
-  #centralDirectory: number[] = [];
-  #filesDataWritten = 0;
+  private files: ZipSource[];
+  private finished = false;
+  private readonly numberOfFiles: number;
+  private centralDirectory: number[] = [];
+  private filesDataWritten = 0;
   constructor(files: ZipSource[]) {
     super();
-    this.#files = files;
-    this.#numberOfFiles = this.#files.length;
+    this.files = files;
+    this.numberOfFiles = this.files.length;
   }
 
   async _read(): Promise<void> {
     // end if there is no files
-    if (!this.#files.length) {
-      if (!this.#finished) {
-        this.#finished = true;
+    if (!this.files.length) {
+      if (!this.finished) {
+        this.finished = true;
         // writing central directory
-        this.push(Buffer.from(this.#centralDirectory));
+        this.push(Buffer.from(this.centralDirectory));
 
         // ending ZIP file
         this.push(ZIP_EPILOGUE);
         const zipFinal = Buffer.alloc(14, 0);
-        let offset = zipFinal.writeUInt16LE(this.#numberOfFiles, 0);
-        offset = zipFinal.writeUInt16LE(this.#numberOfFiles, offset);
-        offset = zipFinal.writeUInt32LE(this.#centralDirectory.length, offset);
-        zipFinal.writeUInt32LE(this.#filesDataWritten, offset);
+        let offset = zipFinal.writeUInt16LE(this.numberOfFiles, 0);
+        offset = zipFinal.writeUInt16LE(this.numberOfFiles, offset);
+        offset = zipFinal.writeUInt32LE(this.centralDirectory.length, offset);
+        zipFinal.writeUInt32LE(this.filesDataWritten, offset);
         this.push(zipFinal);
 
         // push the EOF-signaling `null` chunk.
@@ -78,7 +78,7 @@ export class ZipStoreStream extends Readable {
     }
 
     // getting next file to pipe
-    const { path, data } = this.#files.shift() as ZipSource;
+    const { path, data } = this.files.shift() as ZipSource;
 
     const { bytes, crc32 } = await dataToBuffer(data);
     // We support only ASCII encoded file names here
@@ -103,8 +103,8 @@ export class ZipStoreStream extends Readable {
         [0x00, 0x00, 0x00, 0x00]
     */
     // relative offset of local header
-    directoryEntryMeta.writeUInt32LE(this.#filesDataWritten, 10);
-    this.#centralDirectory.push(
+    directoryEntryMeta.writeUInt32LE(this.filesDataWritten, 10);
+    this.centralDirectory.push(
       ...DIRECTORY_ENTRY_PROLOGUE,
       ...FILE_HEADER_PROLOGUE,
       ...fileHeader,
@@ -117,7 +117,7 @@ export class ZipStoreStream extends Readable {
     this.push(fileHeader);
     this.push(pathBytes);
     // update offset
-    this.#filesDataWritten +=
+    this.filesDataWritten +=
       FILE_DATA_PROLOGUE.length +
       FILE_HEADER_PROLOGUE.length +
       fileHeader.length +
