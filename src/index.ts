@@ -87,13 +87,13 @@ export class ZipStoreStream extends Readable {
     // Generate a file header (as a buffer)
     const fileHeader = Buffer.alloc(16, 0);
     // crc32
-    fileHeader.writeUInt32LE(crc32, 0);
+    let offset = fileHeader.writeUInt32LE(crc32);
     // compressed size
-    fileHeader.writeUInt32LE(bytes.length, 4);
+    offset = fileHeader.writeUInt32LE(bytes.length, offset);
     // uncompressed size
-    fileHeader.writeUInt32LE(bytes.length, 8);
+    offset = fileHeader.writeUInt32LE(bytes.length, offset);
     // file name length
-    fileHeader.writeUInt16LE(pathBytes.length, 12);
+    fileHeader.writeUInt16LE(pathBytes.length, offset);
 
     const directoryEntryMeta = Buffer.alloc(14, 0);
     /*
