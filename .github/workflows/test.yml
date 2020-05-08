@@ -38,7 +38,7 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: yarn install --frozen-lockfile --ignore-optional --non-interactive --silent
 
-      - run: scoop install unzip
+      - run: choco install unzip
         if: matrix.os == 'windows-latest'
 
       - run: node --expose-gc node_modules/jest/bin/jest --forceExit --bail --colors --logHeapUsage --maxWorkers=2 --ci
