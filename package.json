@@ -21,7 +21,7 @@
     "build": "tsc",
     "lint": "eslint --ext=ts ./src",
     "prepublishOnly": "jest && tsc",
-    "test": "jest"
+    "test": " node --expose-gc node_modules/jest-cli/bin/jest --detectLeaks --detectOpenHandles --logHeapUsage"
   },
   "dependencies": {
     "@node-rs/crc32": "0.1.7"
@@ -42,7 +42,8 @@
     "prettier": "latest",
     "prettier-package-json": "latest",
     "ts-jest": "latest",
-    "typescript": "latest"
+    "typescript": "latest",
+    "weak-napi": "2.0.1"
   },
   "keywords": [
     "compress",
@@ -51,6 +52,7 @@
     "zip"
   ],
   "engines": {
+    "node": ">=10.10",
     "yarn": ">=1.19"
   }
 }

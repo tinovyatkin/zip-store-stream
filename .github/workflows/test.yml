@@ -41,7 +41,7 @@ jobs:
       - run: choco install unzip -y --no-progress
         if: matrix.os == 'windows-latest'
 
-      - run: node --expose-gc node_modules/jest/bin/jest --forceExit --bail --colors --logHeapUsage --maxWorkers=2 --ci
+      - run: yarn test --colors --ci
 
       - uses: codecov/codecov-action@v1
         with:
