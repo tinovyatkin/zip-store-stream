@@ -43,10 +43,10 @@ interface ZipSource {
 }
 
 export class ZipStoreStream extends Readable {
-  private files: ZipSource[];
+  private readonly files: ZipSource[];
   private finished = false;
   private readonly numberOfFiles: number;
-  private centralDirectory: number[] = [];
+  private readonly centralDirectory: number[] = [];
   private filesDataWritten = 0;
   constructor(files: ZipSource[]) {
     super();
