@@ -26,7 +26,7 @@ const DIRECTORY_ENTRY_PROLOGUE = Buffer.from([
   0x14,
   0x00,
 ]);
-const ZIP_EPILOGUE = Buffer.from([
+const ZIP_PROLOGUE = Buffer.from([
   0x50,
   0x4b,
   0x05,
@@ -113,7 +113,7 @@ export class ZipStoreStream extends Readable {
         this.push(Buffer.from(this.centralDirectory));
 
         // ending ZIP file
-        this.push(ZIP_EPILOGUE);
+        this.push(ZIP_PROLOGUE);
         const zipFinal = Buffer.alloc(14, 0);
         let offset = zipFinal.writeUInt16LE(this.numberOfFiles, 0);
         offset = zipFinal.writeUInt16LE(this.numberOfFiles, offset);
