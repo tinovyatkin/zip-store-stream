@@ -118,11 +118,13 @@ export class ZipStoreStream extends Readable {
     );
 
     this.push(FILE_DATA_PROLOGUE);
-    this.push(commonHeader);
+    this.push(FILE_HEADER_PROLOGUE);
+    this.push(fileHeader);
     this.push(pathBytes);
     this.#filesDataWritten +=
       FILE_DATA_PROLOGUE.length +
-      commonHeader.length +
+      FILE_HEADER_PROLOGUE.length +
+      fileHeader.length +
       pathBytes.length +
       bytes.length;
     if (this.push(bytes)) return this.read();
