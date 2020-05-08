@@ -7,6 +7,7 @@ module.exports = {
   coverageReporters: ['text', 'json'],
   collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
   moduleFileExtensions: ['ts', 'js'],
+  testMatch: ['**/?(*.)+(test).ts'],
   coverageProvider: 'v8',
   testRunner: 'jest-circus/runner',
   watchPathIgnorePatterns: [
