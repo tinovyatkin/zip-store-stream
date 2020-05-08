@@ -11,8 +11,12 @@
   "bugs": {
     "url": "https://github.com/walletpass/zip-store-stream/issues"
   },
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "dist/index.js",
+  "files": [
+    "dist/*.d.ts",
+    "dist/*.js"
+  ],
   "scripts": {
     "build": "tsc",
     "lint": "eslint --ext=ts ./src",
