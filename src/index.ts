@@ -93,8 +93,6 @@ export class ZipStoreStream extends Readable {
     // file name length
     fileHeader.writeUInt16LE(pathBytes.length, 12);
 
-    const commonHeader = Buffer.concat([FILE_HEADER_PROLOGUE, fileHeader]);
-
     this.#centralDirectory.push(
       0x50,
       0x4b,
@@ -102,7 +100,8 @@ export class ZipStoreStream extends Readable {
       0x02,
       0x14,
       0x00,
-      ...commonHeader,
+      ...FILE_HEADER_PROLOGUE,
+      ...fileHeader,
       0x00,
       0x00,
       0x00,
@@ -121,6 +120,7 @@ export class ZipStoreStream extends Readable {
     this.push(FILE_HEADER_PROLOGUE);
     this.push(fileHeader);
     this.push(pathBytes);
+    // update offset
     this.#filesDataWritten +=
       FILE_DATA_PROLOGUE.length +
       FILE_HEADER_PROLOGUE.length +
