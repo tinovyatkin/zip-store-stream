@@ -17,6 +17,7 @@ const FILE_HEADER_EPILOGUE = Buffer.from([
   0x00,
   0x00,
 ]);
+const FILE_DATA_EPILOGUE = Buffer.from([0x50, 0x4b, 0x03, 0x04]);
 
 function int(n: number, length: number): number[] {
   return Array.from({ length }, (k: number = n) => {
@@ -115,16 +116,14 @@ export class ZipStoreStream extends Readable {
       ...pathBytes,
     );
 
-    const fileData = [
-      0x50,
-      0x4b,
-      0x03,
-      0x04,
-      ...commonHeader,
-      ...pathBytes,
-      ...bytes,
-    ];
-    this.#filesDataWritten += fileData.length;
-    if (this.push(Buffer.from(fileData))) return this.read();
+    this.push(FILE_DATA_EPILOGUE);
+    this.push(commonHeader);
+    this.push(pathBytes);
+    this.#filesDataWritten +=
+      FILE_DATA_EPILOGUE.length +
+      commonHeader.length +
+      pathBytes.length +
+      bytes.length;
+    if (this.push(bytes)) return this.read();
   }
 }
