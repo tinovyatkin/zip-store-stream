@@ -14,6 +14,7 @@ import { EOL } from 'os';
 import { ZipStoreStream } from './index';
 
 const pipeline = promisify(Stream.pipeline);
+const finished = promisify(Stream.finished);
 
 describe('zip store stream', () => {
   it('should create valid empty ZIP archive', async () => {
@@ -99,7 +100,10 @@ describe('zip store stream', () => {
       { path: 'buffer.bin', data: randomBytes(10000) },
       {
         path: 'stream.ts',
-        data: createReadStream(__filename, { encoding: 'utf8' }),
+        data: createReadStream(__filename, {
+          encoding: 'utf8',
+          highWaterMark: 5, // test with small chunks
+        }),
       },
     ]);
     await pipeline(zip, createWriteStream(FILENAME));
@@ -143,5 +147,25 @@ describe('zip store stream', () => {
     );
     expect(parsed[1]?.Size).toBe('10000');
     unlinkSync(FILENAME);
+  });
+
+  it('should re-emit stream errors to upstream', async () => {
+    const wait = (ms: number): Promise<void> =>
+      new Promise(resolve => setTimeout(resolve, ms));
+    /**
+     * This will emit Unhandled promise rejection warning to console, because it's purposely unhandled
+     */
+    async function* generate(): AsyncGenerator<string> {
+      yield 'hello';
+      await wait(1000);
+      yield 'streams';
+      await wait(1000);
+      throw new Error('Boom');
+    }
+    const errStream = Stream.Readable.from(generate());
+    const zip = new ZipStoreStream([{ path: 'stream.bin', data: errStream }]);
+    // consuming stream
+    zip.resume();
+    await expect(finished(zip)).rejects.toHaveProperty('message', 'Boom');
   });
 });
