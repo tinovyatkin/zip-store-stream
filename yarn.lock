@@ -4647,10 +4647,10 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-weak-napi@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/weak-napi/-/weak-napi-2.0.1.tgz#406c69e4b6924b1b336e6c93e150334bd6e6e43e"
-  integrity sha512-5K6swEmuZrS8jjtXon9w0Q8qWUSxQYGSp5G4NUjDerNSPSmwBsb9+DXUbr6hAbrDUGFmjeLDRqxv/ma2OfZ1Xw==
+weak-napi@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/weak-napi/-/weak-napi-2.0.2.tgz#40662d0931498397979edb38a571409f5afce6d3"
+  integrity sha512-LcOSVFrghtVXf4QH+DLIy8iPiCktV7lVbqRDYP+bDPpLzC41RCHQPMyQOnPpWO41Ie4CmnDxS+mbL72r5xFMMQ==
   dependencies:
     node-addon-api "^3.0.0"
     node-gyp-build "^4.2.1"
