@@ -44,7 +44,7 @@
     "prettier-package-json": "latest",
     "ts-jest": "latest",
     "typescript": "latest",
-    "weak-napi": "2.0.1"
+    "weak-napi": "2.0.2"
   },
   "keywords": [
     "compress",
