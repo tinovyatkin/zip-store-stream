@@ -463,17 +463,17 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@node-rs/crc32@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@node-rs/crc32/-/crc32-0.3.0.tgz#eccd5491aef6703a9f9d1a44609ca1af115af55a"
-  integrity sha512-a4D6YfNN/nUkmP95QVRRGlH9M9kDrafcr7PtWxM8dimiYDDkHgoNDEPdURybNV6JHJgcxgaMf+GORUmgf+lXKQ==
+"@node-rs/crc32@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@node-rs/crc32/-/crc32-0.3.1.tgz#c81c1821c8404c8c3aae7f339a79a11221fc63eb"
+  integrity sha512-ML6cv3NTQQQR58t1JPGvmaMoM6RxF6ZWUg0T7geKeB8blfIO6NSuMlefz5s8zR4oHxvXOfRcpx5kdQm44T4BOg==
   dependencies:
-    "@node-rs/helper" "^0.2.0"
+    "@node-rs/helper" "^0.2.1"
 
-"@node-rs/helper@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@node-rs/helper/-/helper-0.2.0.tgz#b685cfd58b705ec78d7f3ecfacc69df781935765"
-  integrity sha512-prRLUebC3aU4I4yo5lrTtrgVNNmW80cI4PejoxlzOa2oVdcdaDQ7bUCsDY0IDLcY1Md5OPOrRLaAkL51ATLHrw==
+"@node-rs/helper@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@node-rs/helper/-/helper-0.2.1.tgz#6bbd9023301a68a2717111e99c41ef38e3fa0726"
+  integrity sha512-DEPYwfkkhJlVLFu6hWVGZi96jUCBahi1WoHZAC7gSFoeoJtxwJ+FrJSDx/8c9aIwAf477NnKj8bRJzFm98Me3A==
   dependencies:
     tslib "^2.0.0"
 
