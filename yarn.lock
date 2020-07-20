@@ -463,10 +463,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@node-rs/crc32@0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@node-rs/crc32/-/crc32-0.3.1.tgz#c81c1821c8404c8c3aae7f339a79a11221fc63eb"
-  integrity sha512-ML6cv3NTQQQR58t1JPGvmaMoM6RxF6ZWUg0T7geKeB8blfIO6NSuMlefz5s8zR4oHxvXOfRcpx5kdQm44T4BOg==
+"@node-rs/crc32@0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@node-rs/crc32/-/crc32-0.3.2.tgz#9b2696a88d31b549661ab927aebdb1e6555e160f"
+  integrity sha512-kfG9hp8dzp5uA0nVQtlmumJb/kgLJ0VWpzYuIJSBfcZ/A/jnCYeoZ35l9IOA/AfpcBbSW41fN4cWF3Oc/PAqIQ==
   dependencies:
     "@node-rs/helper" "^0.2.1"
 
