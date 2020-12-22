@@ -21,7 +21,7 @@
     "build": "tsc",
     "lint": "eslint --ext=ts ./src",
     "prepublishOnly": "jest && tsc",
-    "test": " node --trace-warnings --unhandled-rejections=none --expose-gc node_modules/jest-cli/bin/jest --detectLeaks --detectOpenHandles --logHeapUsage"
+    "test": " node --trace-warnings --unhandled-rejections=none --expose-gc node_modules/jest-cli/bin/jest --detectOpenHandles --logHeapUsage"
   },
   "dependencies": {
     "@node-rs/crc32": "0.3.2"
