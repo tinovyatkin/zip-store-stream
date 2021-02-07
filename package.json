@@ -27,6 +27,7 @@
     "@node-rs/crc32": "1.1.0"
   },
   "devDependencies": {
+    "@swc-node/jest": "^1.1.0",
     "@types/jest": "latest",
     "@types/node": "13.13.5",
     "@typescript-eslint/eslint-plugin": "latest",
@@ -42,7 +43,6 @@
     "npm-package-json-lint": "latest",
     "prettier": "latest",
     "prettier-package-json": "latest",
-    "ts-jest": "latest",
     "typescript": "latest",
     "weak-napi": "2.0.2"
   },

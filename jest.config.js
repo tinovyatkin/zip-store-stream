@@ -1,6 +1,6 @@
 module.exports = {
   clearMocks: true,
-  preset: 'ts-jest',
+  preset: '@swc-node/jest',
   testEnvironment: 'node',
   verbose: true,
   collectCoverage: true,
