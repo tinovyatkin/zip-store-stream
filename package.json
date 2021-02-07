@@ -24,7 +24,7 @@
     "test": " node --trace-warnings --unhandled-rejections=none --expose-gc node_modules/jest-cli/bin/jest --detectOpenHandles --logHeapUsage"
   },
   "dependencies": {
-    "@node-rs/crc32": "0.3.2"
+    "@node-rs/crc32": "1.1.0"
   },
   "devDependencies": {
     "@types/jest": "latest",
