@@ -24,7 +24,7 @@ jobs:
             ${{ runner.OS }}-build-${{ env.cache-name }}-
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
-      - run: yarn install --frozen-lockfile --ignore-optional --non-interactive --silent
+      - run: yarn install --frozen-lockfile --non-interactive --silent
       - run: node --expose-gc node_modules/jest/bin/jest --forceExit --logHeapUsage --runInBand --ci
       - uses: codecov/codecov-action@v1
         with:
@@ -85,7 +85,7 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
       - run: rm .yarnclean
-      - run: yarn install --frozen-lockfile --ignore-optional --non-interactive --silent
+      - run: yarn install --frozen-lockfile --non-interactive --silent
       - run: yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

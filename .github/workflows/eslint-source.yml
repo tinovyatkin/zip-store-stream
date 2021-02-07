@@ -30,7 +30,7 @@ jobs:
       - run: rm .yarnclean
 
       - run: |
-          yarn install --frozen-lockfile --ignore-scripts --ignore-optional --non-interactive --silent --production=false
+          yarn install --frozen-lockfile --ignore-scripts --non-interactive --silent --production=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
