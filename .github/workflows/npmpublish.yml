@@ -26,7 +26,7 @@ jobs:
             ${{ runner.OS }}-
       - run: yarn install --frozen-lockfile --ignore-optional --non-interactive --silent
       - run: node --expose-gc node_modules/jest/bin/jest --forceExit --logHeapUsage --runInBand --ci
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v3
         with:
           file: ./coverage/coverage-final.json
 

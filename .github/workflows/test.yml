@@ -43,7 +43,7 @@ jobs:
 
       - run: yarn test --colors --ci
 
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v3
         with:
           file: ./coverage/coverage-final.json
 
