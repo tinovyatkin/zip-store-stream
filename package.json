@@ -35,7 +35,7 @@
     "eslint-config-prettier": "latest",
     "eslint-plugin-jest": "latest",
     "husky": "latest",
-    "jest": "26.6.3",
+    "jest": "29.6.4",
     "jest-circus": "26.6.3",
     "jest-sonar": "0.2.12",
     "lint-staged": "latest",
